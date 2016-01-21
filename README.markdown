@@ -1,3 +1,9 @@
+## Change version to 4.0.1 by Ray
+
+Add single shard domain support for batch_delete.
+
+    MyShardModel.batch_delete(objects, {shard: "TW"})
+
 # SimpleRecord - ActiveRecord for SimpleDB
 
 An ActiveRecord interface for SimpleDB.  Can be used as a drop in replacement for ActiveRecord in rails.

@@ -801,8 +801,10 @@ module SimpleRecord
       # Pass in an array of objects
     def self.batch_delete(objects, options={})
       if objects
+        domain = @domain
+        domain = "#{domain}_#{options[:shard]}" if options[:shard]
         objects.each_slice(25) do |objs|
-          connection.batch_delete_attributes @domain, objs.collect { |x| x.id }
+          connection.batch_delete_attributes domain, objs.collect { |x| x.id }
         end
       end
     end
