@@ -24,7 +24,7 @@
 #
 # Forked off old ActiveRecord2sdb library.
 
-require 'aws'
+require 'appoxy_aws'
 require 'base64'
 require 'active_support'
 if ActiveSupport::VERSION::MAJOR >= 3
@@ -143,7 +143,7 @@ module SimpleRecord
         # todo: should we init this only when needed?
       end
       s3_ops = {:connection_mode=>options[:connection_mode] || :default}
-      @@s3 = Aws::S3.new(SimpleRecord.aws_access_key, SimpleRecord.aws_secret_key, s3_ops)
+      @@s3 = Aws::AppoxyS3.new(SimpleRecord.aws_access_key, SimpleRecord.aws_secret_key, s3_ops)
 
       if options[:created_col]
         SimpleRecord::Base.has_dates options[:created_col]
@@ -658,7 +658,7 @@ module SimpleRecord
       return SimpleRecord.s3 if SimpleRecord.s3
         # todo: should optimize this somehow, like use the same connection_mode as used in SR
         # or keep open while looping in ResultsArray.
-      Aws::S3.new(SimpleRecord.aws_access_key, SimpleRecord.aws_secret_key)
+      Aws::AppoxyS3.new(SimpleRecord.aws_access_key, SimpleRecord.aws_secret_key)
     end
 
       # options:
