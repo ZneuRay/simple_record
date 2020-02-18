@@ -415,12 +415,12 @@ module SimpleRecord
             query_result = self.connection.select(select_expression, options) do |result|
               #puts 'result=' + result.inspect
               total_count += result[:items][0]["Domain"]["Count"][0].to_i # result.delete(:items)[0]["Domain"]["Count"][0].to_i
-              total_box_usage += result[:box_usage]
+              total_box_usage += result[:box_usage].to_f
               true #continue loop
             end
             ret[:count] = total_count
             ret[:box_usage] = total_box_usage
-            logger.debug "#{total_box_usage}, #{domain}, #{select_expression}"
+            logger.debug "#{"%.10f" % total_box_usage}, #{domain}, #{select_expression}"
             return ret
           else
             query_result = self.connection.select(select_expression, options)
