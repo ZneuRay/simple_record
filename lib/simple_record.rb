@@ -132,6 +132,7 @@ module SimpleRecord
       #                                                  :per_thread (one connection per thread)
       #                                                  :pool (uses a connection pool with a maximum number of connections - NOT IMPLEMENTED YET)
       #      :logger       => Logger Object        # Logger instance: logs to STDOUT if omitted
+      #      :simple_logger       => Logger Object        # Simple Record Logger instance: logs to STDOUT if omitted
     def establish_connection(aws_access_key=nil, aws_secret_key=nil, options={})
       @aws_access_key = aws_access_key
       @aws_secret_key = aws_secret_key
@@ -150,6 +151,9 @@ module SimpleRecord
       end
       if options[:updated_col]
         SimpleRecord::Base.has_dates options[:updated_col]
+      end
+      if options[:simple_logger]
+        @@logger = options[:simple_logger]
       end
 
 

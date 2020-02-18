@@ -404,7 +404,7 @@ module SimpleRecord
           @next_token = options[:next_token]
           @consistent_read = options[:consistent_read]
           select_expression = build_select(options)
-          logger.debug 'SELECT=' + select_expression
+          # logger.debug 'SELECT=' + select_expression
             # request items
 
           ret = {}
@@ -415,15 +415,17 @@ module SimpleRecord
             query_result = self.connection.select(select_expression, options) do |result|
               #puts 'result=' + result.inspect
               total_count += result[:items][0]["Domain"]["Count"][0].to_i # result.delete(:items)[0]["Domain"]["Count"][0].to_i
-              total_box_usage += result[:box_usage].to_i
+              total_box_usage += result[:box_usage]
               true #continue loop
             end
             ret[:count] = total_count
             ret[:box_usage] = total_box_usage
+            logger.debug "#{total_box_usage}, #{domain}, #{select_expression}"
             return ret
           else
             query_result = self.connection.select(select_expression, options)
             @next_token = query_result[:next_token]
+            logger.debug "#{query_result[:box_usage]}, #{domain}, #{select_expression}"
           end
             # puts 'QR=' + query_result.inspect
 
