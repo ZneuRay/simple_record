@@ -420,12 +420,12 @@ module SimpleRecord
             end
             ret[:count] = total_count
             ret[:box_usage] = total_box_usage
-            logger.debug "#{"%.10f" % total_box_usage}, #{domain}, #{select_expression}"
+            logger.debug "#{"%.10f" % total_box_usage} #{domain} SELECT #{select_expression}"
             return ret
           else
             query_result = self.connection.select(select_expression, options)
             @next_token = query_result[:next_token]
-            logger.debug "#{query_result[:box_usage]}, #{domain}, #{select_expression}"
+            logger.debug "#{query_result[:box_usage]} #{domain} SELECT #{select_expression}"
           end
             # puts 'QR=' + query_result.inspect
 
